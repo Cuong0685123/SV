@@ -36,5 +36,5 @@ const upload = multer({ storage });
 router.post('/',upload.single("avatar"), crStudent);
 router.get('/:studentId/student', readStudentbyId);
 router.delete('/:studentId', deleteStudent);
-router.patch('/:studentId', updateStudent);
+router.patch('/:studentId',upload.single("avatar"), updateStudent);
 export default router;
