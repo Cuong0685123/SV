@@ -63,3 +63,19 @@ export const deleteStudent = async (req, res) =>{
     
   }
 }
+export const updateStudent = async (req, res) =>{
+  const {studentId} = req.params;
+  try {
+    const student = await Student.findById(studentId);
+    if(student){
+      const student = await Student.findByIdAndUpdate(studentId, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      res.status(201).json({status:'success', data:student})
+    }
+  } catch (error) { 
+    res.status(400).json({status:'fail', message:error.message})
+    
+  }
+}
