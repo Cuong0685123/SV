@@ -1,13 +1,21 @@
 import Student from "../model/student.model.js";
 
+
+
+
+
+
+
 export const crStudent = async (req, res) => {
   const { fullName, dayOfBirth, gender, major } = req.body;
   try {
+    console.log(req.file.location)
     const newStudent = await Student.create({
       fullName: fullName,
       dayOfBirth: dayOfBirth,
       gender: gender,
       major: major,
+      avatar: req.file.location,
     });
     console.log({newStudent});
     res.status(201).json({

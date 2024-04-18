@@ -10,11 +10,14 @@ const studentSchema = new mongoose.Schema({
     required: true,
   },
   gender: {
-    type: String,
+    type: Boolean,
     required: true,
-    enum: ["male", "female"],
   },
   major: {
+    type: String,
+    required: true,
+  },
+  avatar: {
     type: String,
     required: true,
   },
