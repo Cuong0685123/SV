@@ -1,0 +1,65 @@
+import Student from "../model/student.model.js";
+
+export const crStudent = async (req, res) => {
+  const { fullName, dayOfBirth, gender, major } = req.body;
+  try {
+    const newStudent = await Student.create({
+      fullName: fullName,
+      dayOfBirth: dayOfBirth,
+      gender: gender,
+      major: major,
+    });
+    console.log({newStudent});
+    res.status(201).json({
+      status: "success",
+      data: {
+       ...newStudent._doc
+      },
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: "Data is not inserted",
+      error: error.message,
+    });
+  }
+};
+export const readStudentbyId = async (req, res) => {
+  const { studentId } = req.params;
+  try {
+    const student = await Student.findById(studentId);
+    if (student) {
+      res.status(200).json({
+        status: "success",
+        data: student,
+      });
+    } else {
+      res.status(404).json({
+        status: "fail",
+        message: "Student not found",
+      });
+    }
+  } catch (error) {
+    res.status(400).json({
+      status: "fail",
+      message: error.message,
+    });
+  }
+};
+
+
+export const deleteStudent = async (req, res) =>{
+  const {studentId} = req.params;
+  try {
+    const student = await Student.findById(studentId);
+    if(student){
+      student = await Student.findByIdAndDelete(studentId);
+      res.status(201).json({status:'success'})
+    }else{
+      res.status(404).json({status:'fail', message:'Student not found'})
+    }
+  } catch (error)   {
+    res.status(400).json({status:'ok', message:error.message})
+    
+  }
+}
